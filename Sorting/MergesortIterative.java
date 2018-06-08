@@ -22,7 +22,6 @@ public class MergesortIterative {
         for (current = 1; current < arraySize; current += current) {
             for (left_start = leftStart; left_start < arraySize; left_start += 2 * current) {
                 int mid = left_start + current - 1;
-                
                 int right = Math.min(left_start + 2 * current - 1, arraySize);
                 mergeHalves(arr, temp, mid, left_start, right);
             }
