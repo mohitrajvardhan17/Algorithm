@@ -11,25 +11,28 @@ import java.util.Stack;
  *
  * @author emorajv
  */
-public class QuicksortIterative {
-    public static void doQuicksort(int arr[],int left,int right){
-        Stack<Integer> stack = new Stack<>();
-        int start = 0;
-        int end = arr.length -1;
-        stack.push(start);
-        stack.push(end);
-        while(!stack.isEmpty()){
-            end = stack.pop();
-            start = stack.pop();
-            int index = doPartion(arr, start, end);
-            stack.push(index);
-            stack.push(right);
-            stack.push(left);
-            stack.push(index-1);
+public class IterativeQuickSort {
+    public static void sort(int arr[]){
+        Stack<Integer> stk=new Stack();
+        int start=0,index=0,end=arr.length-1;
+        stk.push(end);
+        stk.push(start);
+        while(!stk.isEmpty()){
+            start = stk.pop();
+            end = stk.pop();
+            index = IterativeQuickSort.doPartition(arr,start,end);
+            if(index - 1 > end){
+                stk.push(end);
+                stk.push(index-1);
+            }
+            if(index + 1 < start){
+                stk.push(index);
+                stk.push(start);
+            }   
         }
     }
-    
-    private static int doPartion(int arr[],int left,int right){
+
+    public static int doPartition(int arr[],int left ,int right){
         int mid = (left + right) / 2;
         int pivot = arr[mid];
         while(left <= right){
@@ -49,28 +52,11 @@ public class QuicksortIterative {
         }
         return left;
     }
-    public static void main(String[] args){
-        int arr[] = {8,5,9,4,2,6,7,1,3,0};
-        Boolean first = true;
-        for(int element:arr){
-            if(first){
-                System.out.print(element);
-                first = false;
-            } else {
-                System.out.print(","+element);
-            }
+    public static void main(String[] args) {
+        int arr[]={10,9,8,7,6,5,4,3,2,1};
+        IterativeQuickSort.sort(arr);
+        for(int item:arr){
+            System.out.println(item);
         }
-        System.out.println("");
-        QuicksortRecusive.doQuicksort(arr, 0, arr.length-1);
-        first = true;
-        for(int element:arr){
-            if(first){
-                System.out.print(element);
-                first = false;
-            } else {
-                System.out.print(","+element);
-            }
-        }
-        System.out.println("");
     }
 }
